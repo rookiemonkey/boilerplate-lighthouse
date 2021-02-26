@@ -1,0 +1,18 @@
+{
+  "output": "./results",
+  "delay": 1000,
+  "urls": [
+    {
+      "url": "https://hackthissite.org/",
+      "file_name": "hack_this_site.html"
+    },
+    {
+      "url": "https://hack-yourself-first.com/",
+      "file_name": "hack_your_self.html"
+    },
+    {
+      "url": "https://google-gruyere.appspot.com/",
+      "file_name": "google_gruyere.html"
+    }
+  ]
+}

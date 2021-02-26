@@ -1,0 +1,9 @@
+# dependencies
+node_modules
+
+# lighthouse results
+results
+*.html
+
+# yarn errors
+yarn-error.log
