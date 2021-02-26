@@ -4,10 +4,14 @@
   "main": "lighthouse.js",
   "license": "MIT",
   "dependencies": {
+    "chalk": "^4.1.0",
     "chrome-launcher": "^0.13.4",
-    "lighthouse": "^7.2.0"
+    "cli-spinner": "^0.2.10",
+    "lighthouse": "^7.2.0",
+    "serve": "^11.3.2"
   },
   "scripts": {
-    "audit": "node lighthouse.js"
+    "audit": "clear && node ./src/lighthouse.js && yarn run server",
+    "server": "serve ./results"
   }
 }

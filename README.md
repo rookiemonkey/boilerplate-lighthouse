@@ -1,5 +1,5 @@
 
-1. Define variables on source.json
+1. Define variables on ./src/source.json
   - URLs to test
   - output file name (w/ extension)
   - output directory (relative to source.json)
@@ -8,5 +8,5 @@
 2. Run lighthouse 
 ```$ yarn run audit```
 
-3. Open your results on your browser
+3. Once tests are done, open your browser on localhost:5000 to see results
 ```localhost:5000```

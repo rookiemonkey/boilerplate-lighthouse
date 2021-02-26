@@ -1,0 +1,10 @@
+{
+  "output": "../results",
+  "delay": 1000,
+  "urls": [
+    {
+      "url": "https://hackthissite.org/",
+      "file_name": "hack_this_site.html"
+    }
+  ]
+}
