@@ -6,6 +6,8 @@ const sleep = require('./helpers/sleep');
 const audit = require('./helpers/audit');
 const log = console.log;
 const outputPath = path.join(__dirname, source.output);
+const Sitemapper = require('sitemapper');
+const sitemap = new Sitemapper();
 
 /**
  * ! delete/recreate the results folder
@@ -19,7 +21,9 @@ fs.rm(outputPath, { recursive: true }, async () => {
 
     fs.mkdirSync(outputPath, 0744);
 
-    for (const url of source.urls) {
+    const { sites } = await sitemap.fetch(source.sitemap_url)
+
+    for (const url of sites) {
       await sleep(source.delay)
       await audit(url)
     }

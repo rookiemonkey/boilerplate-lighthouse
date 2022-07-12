@@ -3,6 +3,7 @@ node_modules
 
 # lighthouse input
 src/source.json
+*.xml
 
 # lighthouse results
 results

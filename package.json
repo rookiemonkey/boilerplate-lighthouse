@@ -8,10 +8,9 @@
     "chrome-launcher": "^0.15.1",
     "cli-spinner": "^0.2.10",
     "lighthouse": "^9.6.3",
-    "serve": "^11.3.2"
+    "sitemapper": "^3.2.2"
   },
   "scripts": {
-    "audit": "clear && node ./src/lighthouse.js && yarn run server",
-    "server": "serve ./results"
+    "audit": "clear && node ./src/lighthouse.js"
   }
 }

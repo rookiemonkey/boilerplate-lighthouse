@@ -2,7 +2,7 @@
 1. Define variables on ./src/source.json
   - output directory (relative to source.json)
   - delay per test (needed to prevent stress on the server)
-  - URLs to test
+  - URL of Main sitemap.xml
 
 2. Run lighthouse 
 ```$ yarn run audit```
