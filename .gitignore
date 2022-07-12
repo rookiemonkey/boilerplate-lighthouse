@@ -2,7 +2,7 @@
 node_modules
 
 # lighthouse input
-source.json
+src/source.json
 
 # lighthouse results
 results
