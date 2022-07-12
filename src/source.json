@@ -1,8 +1,0 @@
-{
-  "output": "../results",
-  "delay": 1000,
-  "urls": [
-    "https://hackthissite.org",
-    "https://hackthissite.org/another-page"
-  ]
-}
