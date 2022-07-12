@@ -12,11 +12,10 @@ const outputPath = path.join(__dirname, source.output);
  * ! then run lighthouse test
  */
 
-fs.rmdir(outputPath, { recursive: true }, async () => {
+fs.rm(outputPath, { recursive: true }, async () => {
 
   try {
-    log(chalk.blue.bold("Starting Lighthouse Audit"))
-    log('')
+    log(chalk.blue.bold("Starting Lighthouse Audit\n"))
 
     fs.mkdirSync(outputPath, 0744);
 
@@ -25,8 +24,7 @@ fs.rmdir(outputPath, { recursive: true }, async () => {
       await audit(url)
     }
 
-    log('')
-    log(chalk.green.bold("Done! Please check your browser using the local url below"))
+    log(chalk.green.bold("\nDone! Please check your browser using the local url below\n"))
   }
 
   catch (e) { log(e); process.exit; }

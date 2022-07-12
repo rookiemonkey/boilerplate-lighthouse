@@ -1,6 +1,9 @@
 # dependencies
 node_modules
 
+# lighthouse input
+source.json
+
 # lighthouse results
 results
 *.html
