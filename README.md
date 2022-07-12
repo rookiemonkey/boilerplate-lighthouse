@@ -1,9 +1,8 @@
 
 1. Define variables on ./src/source.json
-  - URLs to test
-  - output file name (w/ extension)
   - output directory (relative to source.json)
   - delay per test (needed to prevent stress on the server)
+  - URLs to test
 
 2. Run lighthouse 
 ```$ yarn run audit```
