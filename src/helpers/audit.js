@@ -14,7 +14,7 @@ const log = console.log;
  */
 
 
-module.exports = async function audit(url) {
+module.exports = async function audit(url, finalPath) {
 
   const chrome = await chromeLauncher.launch({ chromeFlags: ['--headless'] });
   flags.port = chrome.port;
@@ -23,7 +23,7 @@ module.exports = async function audit(url) {
   // .report is the HTML report as a string
   const reportHtml = runnerResult.report;
   const fileName = url.substring(url.lastIndexOf('/') + 1)
-  fs.writeFileSync(path.join(__dirname, `../${output}/${fileName}.html`), reportHtml);
+  fs.writeFileSync(path.join(`${finalPath}.html`), reportHtml);
 
   // .lhr is the Lighthouse Result as a JS object
   log('DONE ✓ ' + chalk.yellow(runnerResult.lhr.finalUrl));

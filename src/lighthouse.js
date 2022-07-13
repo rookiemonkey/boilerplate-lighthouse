@@ -21,11 +21,26 @@ fs.rm(outputPath, { recursive: true }, async () => {
 
     fs.mkdirSync(outputPath, 0744);
 
+    const sitemapName = source.sitemap_url.slice(source.sitemap_url.lastIndexOf('/')+1)
+    const rootUrl = source.sitemap_url.replace(sitemapName, '')
     const { sites } = await sitemap.fetch(source.sitemap_url)
 
-    for (const url of sites) {
+    for (const site of sites) {
+      // delay
       await sleep(source.delay)
-      await audit(url)
+
+      // parse the url and split to to form a folders
+      const parts = site.replace(rootUrl, '').split('/')
+
+      for (let i = 0; i < parts.length; i++) {
+        const directory = path.join(outputPath, parts[i]);
+
+        // create a folder if not existing unless its the last item on the array
+        if ((i < parts.length-1 && !fs.existsSync(directory))) await fs.mkdirSync(directory)
+
+        // if last item thats the html and its should be audited
+        if (i === parts.length - 1) await audit(site, path.join(outputPath, site.replace(rootUrl, '')))
+      }
     }
 
     log(chalk.green.bold("\nDone! Please check your browser using the local url below\n"))
