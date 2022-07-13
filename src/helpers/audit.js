@@ -12,21 +12,27 @@ const log = console.log;
  * @param {*} url 
  */
 
-module.exports = async function audit(url, finalPath) {
+module.exports = async function audit(url, finalPath, summaryPath) {
 
   const chrome = await chromeLauncher.launch({ chromeFlags: ['--headless'] });
   flags.port = chrome.port;
   
   const runnerResult = await lighthouse(url, flags, options);
 
-  // log score for each SEO point
-  const points = Object.keys(runnerResult.lhr.categories)
-  points.forEach(point => console.log(runnerResult.lhr.categories[point].score*100))
+  // append the url&scores of each lighthouse test category to the created summary.csv
+  const categories = Object.keys(runnerResult.lhr.categories)
+  let scores = `${url},`
 
-  // .report is the HTML report as a string
-  fs.writeFileSync(path.join(`${finalPath}.html`), runnerResult.report);
+  categories.forEach((category, index) => {
+    const score = runnerResult.lhr.categories[category].score * 100
+    index === categories.length - 1 ? scores += `${score}` : scores += `${score},`
+  })
 
-  // .lhr is the Lighthouse Result as a JS object
+  await fs.appendFileSync(summaryPath, scores)
+
+  // generate the HTML report
+  await fs.writeFileSync(path.join(`${finalPath}.html`), runnerResult.report);
+
   log('DONE ✓ ' + chalk.yellow(runnerResult.lhr.finalUrl));
   await chrome.kill();
 
