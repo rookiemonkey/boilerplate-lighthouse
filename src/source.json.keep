@@ -1,5 +1,5 @@
 {
-  "output": "../results",
+  "output": "../results/",
   "delay": 1000,
   "sitemap_url": "https://wp.seantburke.com/sitemap.xml"
 }
