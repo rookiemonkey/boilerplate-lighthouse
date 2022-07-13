@@ -18,12 +18,11 @@ module.exports = async function audit(url, finalPath) {
 
   const chrome = await chromeLauncher.launch({ chromeFlags: ['--headless'] });
   flags.port = chrome.port;
+  
   const runnerResult = await lighthouse(url, flags, options);
 
   // .report is the HTML report as a string
-  const reportHtml = runnerResult.report;
-  const fileName = url.substring(url.lastIndexOf('/') + 1)
-  fs.writeFileSync(path.join(`${finalPath}.html`), reportHtml);
+  fs.writeFileSync(path.join(`${finalPath}.html`), runnerResult.report);
 
   // .lhr is the Lighthouse Result as a JS object
   log('DONE ✓ ' + chalk.yellow(runnerResult.lhr.finalUrl));
