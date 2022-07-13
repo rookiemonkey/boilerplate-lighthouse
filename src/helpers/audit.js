@@ -12,7 +12,7 @@ const log = console.log;
  * @param {*} url 
  */
 
-module.exports = async function audit(url, finalPath, summaryPath) {
+module.exports = async function audit(url, finalPath, summaryPath, progress, count) {
 
   const chrome = await chromeLauncher.launch({ chromeFlags: ['--headless'] });
   flags.port = chrome.port;
@@ -25,7 +25,7 @@ module.exports = async function audit(url, finalPath, summaryPath) {
 
   categories.forEach((category, index) => {
     const score = runnerResult.lhr.categories[category].score * 100
-    index === categories.length - 1 ? scores += `${score}` : scores += `${score},`
+    index === categories.length - 1 ? scores += `${score}\n` : scores += `${score},`
   })
 
   await fs.appendFileSync(summaryPath, scores)
@@ -33,7 +33,7 @@ module.exports = async function audit(url, finalPath, summaryPath) {
   // generate the HTML report
   await fs.writeFileSync(path.join(`${finalPath}.html`), runnerResult.report);
 
-  log('DONE ✓ ' + chalk.yellow(runnerResult.lhr.finalUrl));
+  log(`[${progress} of ${count}] DONE ✓ ` + chalk.yellow(runnerResult.lhr.finalUrl));
   await chrome.kill();
 
 };

@@ -27,6 +27,9 @@ const sitemap = new Sitemapper();
     const rootUrl = source.sitemap_url.replace(sitemapName, '')
     const { sites } = await sitemap.fetch(source.sitemap_url)
 
+    let count = sites.length
+    let progress = 1
+
     for (const site of sites) {
       // delay
       await sleep(source.delay)
@@ -41,8 +44,10 @@ const sitemap = new Sitemapper();
         if ((i < parts.length - 1 && !fs.existsSync(directory))) await fs.mkdirSync(directory)
 
         // if last item thats the html and its should be audited
-        if (i === parts.length - 1) await audit(site, path.join(outputPath, site.replace(rootUrl, '')), summaryPath)
+        if (i === parts.length - 1) await audit(site, path.join(outputPath, site.replace(rootUrl, '')), summaryPath, progress, count)
       }
+
+      progress+=1
     }
 
     log(chalk.green.bold("\nDone! Please check your browser using the local url below\n"))
