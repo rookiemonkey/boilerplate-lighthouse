@@ -1,9 +1,9 @@
 
 // https://github.com/GoogleChrome/lighthouse/blob/HEAD/docs/configuration.md
 // DESKTOP - https://github.com/GoogleChrome/lighthouse/blob/master/lighthouse-core/config/lr-desktop-config.js
-const constants = require('./constants.js');
+import constants from './constants.js'
 
-module.exports = {
+export default {
   extends: 'lighthouse:default',
   settings: {
     maxWaitForFcp: 15 * 1000,

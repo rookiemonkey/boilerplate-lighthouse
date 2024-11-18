@@ -1,24 +1,29 @@
-const fsPromise = require('fs/promises');
-const fs = require('fs');
-const chalk = require('chalk');
-const path = require('path');
-const source = require('./source.json');
-const sleep = require('./helpers/sleep');
-const audit = require('./helpers/audit');
+import fsPromise from 'fs/promises';
+import fs from 'fs';
+import chalk from 'chalk';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import Sitemapper from 'sitemapper';
+
+import source from './source.json' assert { type: "json" };
+import sleep from './helpers/sleep.js';
+import audit from './helpers/audit.js';
+
 const log = console.log;
+const __dirname = path.dirname(fileURLToPath(import.meta.url)); // get the name of the directo
 const outputPath = path.join(__dirname, source.output);
 const summaryPath = `${outputPath}/summary.csv`;
-const Sitemapper = require('sitemapper');
-const sitemap = new Sitemapper();
 
 (async function(){
 
   try {
+    const sitemap = new Sitemapper();
+
     log(chalk.blue.bold("Starting Lighthouse Audit\n"))
 
     // recreate the output folder
     if (fs.existsSync(outputPath)) await fsPromise.rm(outputPath, { recursive: true })
-    await fs.mkdirSync(outputPath, 0744);
+    await fs.mkdirSync(outputPath, 0o744);
 
     // create the .csv file with the headers
     await fs.writeFileSync(summaryPath, "url, performance, accessibility, best-practices, seo, pwa\n");

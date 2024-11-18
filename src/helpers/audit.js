@@ -1,10 +1,10 @@
-const fs = require('fs');
-const chalk = require('chalk');
-const path = require('path');
-const lighthouse = require('lighthouse');
-const chromeLauncher = require('chrome-launcher');
-const flags = require('../config/flags');
-const options = require('../config/options');
+import fs from 'fs';
+import chalk from 'chalk';
+import path from 'path';
+import lighthouse from 'lighthouse';
+import * as chromeLauncher from 'chrome-launcher';
+import flags from '../config/flags.js';
+import options from '../config/options.js';
 const log = console.log;
 
 /**
@@ -12,11 +12,11 @@ const log = console.log;
  * @param {*} url 
  */
 
-module.exports = async function audit(url, finalPath, summaryPath, progress, count) {
+export default async function audit(url, finalPath, summaryPath, progress, count) {
 
-  const chrome = await chromeLauncher.launch({ chromeFlags: ['--headless'] });
+  const chrome = await chromeLauncher.launch({ port: 9222, chromeFlags: ["--headless", "--disable-gpu", "--no-sandbox"] });
   flags.port = chrome.port;
-  
+
   const runnerResult = await lighthouse(url, flags, options);
 
   // append the url&scores of each lighthouse test category to the created summary.csv
