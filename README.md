@@ -1,3 +1,9 @@
+# REQUIREMENTS
+
+1. nodejs v18>=
+
+
+# HOW TO USE
 
 1. Define variables on ./src/source.json
   - output directory (relative to source.json)

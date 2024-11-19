@@ -14,26 +14,35 @@ const log = console.log;
 
 export default async function audit(url, finalPath, summaryPath, progress, count) {
 
-  const chrome = await chromeLauncher.launch({ port: 9222, chromeFlags: ["--headless", "--disable-gpu", "--no-sandbox"] });
-  flags.port = chrome.port;
+  try {
+    const chrome = await chromeLauncher.launch({
+      chromeFlags: ["--headless", "--disable-gpu", "--no-sandbox"],
+      chromePath: "/usr/bin/google-chrome"
+    });
+    flags.port = chrome.port;
 
-  const runnerResult = await lighthouse(url, flags, options);
+    const runnerResult = await lighthouse(url, flags, options);
 
-  // append the url&scores of each lighthouse test category to the created summary.csv
-  const categories = Object.keys(runnerResult.lhr.categories)
-  let scores = `${url},`
+    // append the url&scores of each lighthouse test category to the created summary.csv
+    const categories = Object.keys(runnerResult.lhr.categories)
+    let scores = `${url},`
 
-  categories.forEach((category, index) => {
-    const score = runnerResult.lhr.categories[category].score * 100
-    index === categories.length - 1 ? scores += `${score}\n` : scores += `${score},`
-  })
+    categories.forEach((category, index) => {
+      const score = runnerResult.lhr.categories[category].score * 100
+      index === categories.length - 1 ? scores += `${score}\n` : scores += `${score},`
+    })
 
-  await fs.appendFileSync(summaryPath, scores)
+    await fs.appendFileSync(summaryPath, scores)
 
-  // generate the HTML report
-  await fs.writeFileSync(path.join(`${finalPath}.html`), runnerResult.report);
+    // generate the HTML report
+    await fs.writeFileSync(path.join(`${finalPath}.html`), runnerResult.report);
 
-  log(`[${progress} of ${count}] DONE ✓ ` + chalk.yellow(runnerResult.lhr.finalUrl));
-  await chrome.kill();
+    log(`[${progress} of ${count}] DONE ✓ ` + chalk.yellow(runnerResult.lhr.finalUrl));
+    await chrome.kill();
+  }
+
+  catch(e){
+    console.log("ERROR => ", e)
+  }
 
 };

@@ -56,8 +56,10 @@ const summaryPath = `${outputPath}/summary.csv`;
     }
 
     log(chalk.green.bold("\nDone! Please check your browser using the local url below\n"))
+
+    process.exit();
   }
 
-  catch (e) { log(e); process.exit; }
+  catch (e) { log(e); process.exit(); }
 
 })()
